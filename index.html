@@ -273,8 +273,8 @@
     background:#fff; padding:26px 22px; max-width:640px; margin:0 auto 14px;
     border:1px solid var(--garis); border-radius:8px;
   }
-  .blangko-title{text-align:center; font-family:var(--font-d); font-weight:700; font-size:14px; text-decoration:underline; margin-bottom:8px;}
-  .blangko-warga-label{font-family:var(--font-d); font-weight:700; font-size:13px; border-bottom:2px solid var(--ink); padding-bottom:4px; margin-bottom:6px;}
+  .blangko-title{text-align:center; font-family:var(--font-d); font-weight:700; font-size:14px; text-decoration:underline; margin-bottom:6px;}
+  .blangko-warga-label{font-family:var(--font-d); font-weight:700; font-size:13px; border-bottom:2px solid var(--ink); padding-bottom:3px; margin-bottom:4px;}
   .blangko-id-rows{font-size:12px; margin-bottom:2px; display:flex; justify-content:space-between; gap:10px;}
   .blangko-id-rows b{font-weight:700;}
   .blangko-id-rows .id-left{flex:1;}
@@ -297,10 +297,10 @@
   .print-aspek-item{display:flex; align-items:center; gap:5px; font-size:10.5px; margin-bottom:3px;}
   .print-box{width:10px;height:10px; border:1.3px solid var(--ink); flex:none; position:relative;}
   .print-box.on::after{content:"✓"; position:absolute; inset:-3px 0 0 -1px; font-size:10px; font-weight:900;}
-  .blangko-tl{border:1px solid var(--ink); margin-bottom:10px;}
+  .blangko-tl{border:1px solid var(--ink); margin-bottom:6px;}
   .blangko-tl .head{background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center; padding:5px; border-bottom:1px solid var(--ink);}
-  .blangko-tl .body{padding:7px; font-size:11.5px; min-height:60px; white-space:pre-wrap;}
-  .sig-cols{display:flex; margin-top:4px;}
+  .blangko-tl .body{padding:7px; font-size:11.5px; min-height:95px; white-space:pre-wrap;}
+  .sig-cols{display:flex; margin-top:2px;}
   .sig-cols > div{flex:1; padding:0 4px; text-align:center;}
   .sig-cols .role{font-size:10.5px; font-weight:700; min-height:26px; display:flex; align-items:flex-end; justify-content:center;}
   .sig-img{height:42px; display:flex; align-items:flex-end; justify-content:center; margin:4px 0 2px;}
@@ -329,7 +329,7 @@
     body *{visibility:hidden;}
     #printArea, #printArea *{visibility:visible;}
     #printArea{display:block !important; position:absolute; left:0; top:0; width:100%; margin:0; padding:0;}
-    .blangko-page{border:none; box-shadow:none; page-break-inside:avoid; max-width:none; width:100%; margin:0; padding:10mm 12mm 4mm;}
+    .blangko-page{border:none; box-shadow:none; page-break-inside:avoid; max-width:none; width:100%; margin:0; padding:6mm 12mm 0mm;}
     .blangko-page.doc-page{page-break-before:always;}
     .print-actions{display:none !important;}
   }
