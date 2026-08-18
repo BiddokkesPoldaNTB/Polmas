@@ -279,26 +279,28 @@
   .blangko-id-rows b{font-weight:700;}
   .circled-print{position:relative; display:inline-block; padding:1px 10px;}
   .circled-print svg{position:absolute; inset:-8px -4px; width:calc(100% + 8px); height:calc(100% + 16px);}
-  .circled-print path{fill:none; stroke:var(--merah); stroke-width:3; stroke-linecap:round;}
+  .circled-print path{fill:none; stroke:#111; stroke-width:2.6; stroke-linecap:round;}
   .blangko-note{font-size:12px; margin:10px 0 8px;}
-  .blangko-table{border:1px solid var(--ink); border-radius:4px; overflow:hidden; margin-bottom:10px;}
-  .blangko-table .head{display:flex; background:#EDE6D5; font-weight:700; font-size:11.5px; text-align:center;}
-  .blangko-table .head > div{flex:1; padding:6px; border-right:1px solid var(--ink);}
+  .blangko-table{border:1px solid var(--ink); overflow:hidden; margin-bottom:10px;}
+  .blangko-table .head{display:flex; background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center;}
+  .blangko-table .head > div{padding:6px; border-right:1px solid var(--ink);}
   .blangko-table .head > div:last-child{border-right:none;}
+  .blangko-table .head .h-aspek{flex:0 0 36%;}
+  .blangko-table .head .h-info{flex:1;}
   .blangko-table .body{display:flex;}
-  .blangko-table .aspek-col{flex:1; border-right:1px solid var(--ink); padding:8px;}
+  .blangko-table .aspek-col{flex:0 0 36%; border-right:1px solid var(--ink); padding:8px;}
   .blangko-table .info-col{flex:1; padding:8px; font-size:12px; white-space:pre-wrap;}
   .blangko-aspek-cols{display:flex; gap:4px;}
   .blangko-aspek-cols > div{flex:1;}
   .print-aspek-item{display:flex; align-items:center; gap:5px; font-size:10.8px; margin-bottom:5px;}
   .print-box{width:11px;height:11px; border:1.3px solid var(--ink); flex:none; position:relative;}
   .print-box.on::after{content:"✓"; position:absolute; inset:-3px 0 0 -1px; font-size:11px; font-weight:900;}
-  .blangko-tl{border:1px solid var(--ink); border-radius:4px; margin-bottom:14px;}
-  .blangko-tl .head{background:#EDE6D5; font-weight:700; font-size:11.5px; text-align:center; padding:6px; border-bottom:1px solid var(--ink);}
-  .blangko-tl .body{padding:10px; font-size:12px; min-height:50px; white-space:pre-wrap;}
-  .sig-cols{display:flex; text-align:center; margin-top:6px;}
-  .sig-cols > div{flex:1; padding:0 4px;}
-  .sig-cols .role{font-size:11px; font-weight:700;}
+  .blangko-tl{border:1px solid var(--ink); margin-bottom:14px;}
+  .blangko-tl .head{background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center; padding:6px; border-bottom:1px solid var(--ink);}
+  .blangko-tl .body{padding:10px; font-size:12px; min-height:150px; white-space:pre-wrap;}
+  .sig-cols{display:flex; margin-top:6px;}
+  .sig-cols > div{flex:1; padding:0 4px; text-align:center;}
+  .sig-cols .role{font-size:11px; font-weight:700; min-height:29px; display:flex; align-items:flex-end; justify-content:center;}
   .sig-img{height:56px; display:flex; align-items:flex-end; justify-content:center; margin:6px 0 2px;}
   .sig-img img{max-height:54px; max-width:100%;}
   .sig-name{font-size:11px; border-top:1px solid var(--ink); padding-top:3px; margin-top:4px;}
@@ -309,10 +311,12 @@
   .print-actions{display:flex; gap:10px; margin:14px 0 28px;}
 
   @media print{
+    @page{ margin: 0; }
+    body{ margin:0; }
     body *{visibility:hidden;}
     #printArea, #printArea *{visibility:visible;}
-    #printArea{display:block !important; position:absolute; left:0; top:0; width:100%;}
-    .blangko-page{border:none; box-shadow:none; page-break-after:always;}
+    #printArea{display:block !important; position:absolute; left:0; top:0; width:100%; margin:0; padding:0;}
+    .blangko-page{border:none; box-shadow:none; page-break-after:always; max-width:none; width:100%; margin:0; padding:14mm 12mm;}
     .print-actions{display:none !important;}
   }
 
@@ -954,14 +958,14 @@ function buildPrintArea(idKunjungan, payload){
       <div class="blangko-title">BLANGKO KUNJUNGAN POLMAS "PRESISI WARGA NTB"</div>
       <div class="blangko-warga-label">WARGA ${w.label}</div>
       <div class="blangko-id-rows"><b>Nama :</b> ${esc(w.nama)} &nbsp;&nbsp;&nbsp;
-        <b>Lk / Pr :</b> ${['Lk','Pr'].map(g=>g===genderCode? `<span class="circled-print">${g}${inkCircleSVG()}</span>` : g).join(' / ')}
+        ${['Lk','Pr'].map(g=>g===genderCode? `<span class="circled-print">${g}${inkCircleSVG()}</span>` : g).join(' / ')}
         &nbsp;&nbsp;&nbsp; <b>Umur:</b> ${esc(w.umur)} Tahun</div>
       <div class="blangko-id-rows"><b>Pekerjaan:</b> ${esc(w.pekerjaan)||'-'} &nbsp;&nbsp;&nbsp; <b>No. Telp:</b> ${esc(w.telp)||'-'}</div>
       <div class="blangko-id-rows"><b>Alamat :</b> ${esc(w.alamat)}</div>
       <div class="blangko-note">Telah menerima informasi / saran / permasalahan / keluhan dari masyarakat tersebut di atas, sebagai berikut:</div>
 
       <div class="blangko-table">
-        <div class="head"><div>ASPEK</div><div>INFORMASI / SARAN / PERMASALAHAN / KELUHAN Warga Masyarakat</div></div>
+        <div class="head"><div class="h-aspek">ASPEK</div><div class="h-info">INFORMASI / SARAN / PERMASALAHAN / KELUHAN Warga Masyarakat</div></div>
         <div class="body">
           <div class="aspek-col">
             <div class="blangko-aspek-cols">
