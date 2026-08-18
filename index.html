@@ -294,8 +294,7 @@
   .blangko-table .info-col{flex:1; padding:8px; font-size:12px; white-space:pre-wrap;}
   .blangko-aspek-cols{display:flex; gap:4px;}
   .blangko-aspek-cols > div{flex:1;}
-  .print-aspek-item{display:flex; align-items:flex-start; gap:5px; font-size:10.8px; margin-bottom:5px; min-height:26px;}
-  .print-aspek-item .print-box{margin-top:1px;}
+  .print-aspek-item{display:flex; align-items:center; gap:5px; font-size:10.8px; margin-bottom:5px;}
   .print-box{width:11px;height:11px; border:1.3px solid var(--ink); flex:none; position:relative;}
   .print-box.on::after{content:"✓"; position:absolute; inset:-3px 0 0 -1px; font-size:11px; font-weight:900;}
   .blangko-tl{border:1px solid var(--ink); margin-bottom:14px;}
@@ -1105,7 +1104,7 @@ function renderHistory(rows){
             label:r.wargaKe, nama:r.nama, gender:r.gender, umur:r.umur, pekerjaan:r.pekerjaan,
             telp:r.telp, alamat:r.alamat, aspek: r.aspek? r.aspek.split(',').map(s=>s.trim()):[],
             informasi:r.informasi, tindakLanjut:r.tindakLanjut, namaKetuaRT:r.namaKetuaRT,
-            fotos: r.foto? r.foto.split(',').map(s=>s.trim()).filter(Boolean):[],
+            fotos: r.foto? r.foto.split('|||').map(s=>s.trim()).filter(Boolean):[],
             ttdWarga:r.ttdWarga, ttdKetuaRT:r.ttdKetuaRT
           }))
         };
