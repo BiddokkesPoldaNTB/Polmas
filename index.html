@@ -179,8 +179,8 @@
   .upload-box:hover{border-color:var(--emas);}
   .upload-box .icon{font-size:26px; margin-bottom:6px;}
   .upload-box .txt{font-size:13px; color:var(--ink-soft); font-weight:600;}
-  .thumbs{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
-  .thumb{position:relative; width:78px; height:78px; border-radius:8px; overflow:hidden; border:1.5px solid var(--garis);}
+  .thumbs{display:flex; flex-direction:column; gap:10px; margin-top:12px;}
+  .thumb{position:relative; width:100%; aspect-ratio:2/1; border-radius:8px; overflow:hidden; border:1.5px solid var(--garis); background:#f2ede0;}
   .thumb img{width:100%; height:100%; object-fit:cover; display:block;}
   .thumb .rm{
     position:absolute; top:2px; right:2px; width:20px; height:20px; border-radius:50%;
@@ -275,13 +275,15 @@
   }
   .blangko-title{text-align:center; font-family:var(--font-d); font-weight:700; font-size:15px; text-decoration:underline; margin-bottom:14px;}
   .blangko-warga-label{font-family:var(--font-d); font-weight:700; font-size:14px; border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:10px;}
-  .blangko-id-rows{font-size:12.5px; margin-bottom:4px;}
+  .blangko-id-rows{font-size:12.5px; margin-bottom:4px; display:flex; justify-content:space-between; gap:10px;}
   .blangko-id-rows b{font-weight:700;}
+  .blangko-id-rows .id-left{flex:1;}
+  .blangko-id-rows .id-right{flex:none; white-space:nowrap;}
   .circled-print{position:relative; display:inline-block; padding:1px 10px;}
   .circled-print svg{position:absolute; inset:-8px -4px; width:calc(100% + 8px); height:calc(100% + 16px);}
   .circled-print path{fill:none; stroke:#111; stroke-width:2.6; stroke-linecap:round;}
   .blangko-note{font-size:12px; margin:10px 0 8px;}
-  .blangko-table{border:1px solid var(--ink); overflow:hidden; margin-bottom:10px;}
+  .blangko-table{border:1px solid var(--ink); margin-bottom:10px;}
   .blangko-table .head{display:flex; background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center;}
   .blangko-table .head > div{padding:6px; border-right:1px solid var(--ink);}
   .blangko-table .head > div:last-child{border-right:none;}
@@ -292,7 +294,8 @@
   .blangko-table .info-col{flex:1; padding:8px; font-size:12px; white-space:pre-wrap;}
   .blangko-aspek-cols{display:flex; gap:4px;}
   .blangko-aspek-cols > div{flex:1;}
-  .print-aspek-item{display:flex; align-items:center; gap:5px; font-size:10.8px; margin-bottom:5px;}
+  .print-aspek-item{display:flex; align-items:flex-start; gap:5px; font-size:10.8px; margin-bottom:5px; min-height:26px;}
+  .print-aspek-item .print-box{margin-top:1px;}
   .print-box{width:11px;height:11px; border:1.3px solid var(--ink); flex:none; position:relative;}
   .print-box.on::after{content:"✓"; position:absolute; inset:-3px 0 0 -1px; font-size:11px; font-weight:900;}
   .blangko-tl{border:1px solid var(--ink); margin-bottom:14px;}
@@ -303,11 +306,12 @@
   .sig-cols .role{font-size:11px; font-weight:700; min-height:29px; display:flex; align-items:flex-end; justify-content:center;}
   .sig-img{height:56px; display:flex; align-items:flex-end; justify-content:center; margin:6px 0 2px;}
   .sig-img img{max-height:54px; max-width:100%;}
-  .sig-name{font-size:11px; border-top:1px solid var(--ink); padding-top:3px; margin-top:4px;}
+  .sig-name{font-size:11px; padding-top:3px; margin-top:4px;}
   .doc-title{text-align:center; font-family:var(--font-d); font-weight:700; font-size:15px; margin-bottom:16px;}
   .doc-warga-label{font-family:var(--font-d); font-weight:700; font-size:13.5px; margin:14px 0 8px;}
-  .doc-photos{display:flex; flex-wrap:wrap; gap:8px;}
-  .doc-photos img{width:100%; max-width:560px; border:2px solid var(--ink); border-radius:4px;}
+  .doc-photos{display:flex; flex-direction:column; gap:12px;}
+  .doc-photos .photo-box{width:100%; aspect-ratio:2/1; overflow:hidden; border:2px solid var(--ink); border-radius:4px; background:#f2ede0;}
+  .doc-photos .photo-box img{width:100%; height:100%; object-fit:cover; display:block;}
   .print-actions{display:flex; gap:10px; margin:14px 0 28px;}
 
   @media print{
@@ -378,14 +382,16 @@ const CONFIG = {
 const ASPEK_KIRI = ['IDEOLOGI','POLITIK','SOSIAL','BUDAYA','AGAMA','KEPERCAYAAN'];
 const ASPEK_KANAN = ['KAMTIBMAS','KRIMINALITAS','TIBCARLANTAS','PERILAKU POLRI','YAN POLRI','PELAYANAN KESEHATAN'];
 
-const STEPS = ['Info','Warga I','Warga II','Dokumentasi','Tanda Tangan','Ringkasan'];
+const PEKERJAAN_OPTIONS = ['Polri','ASN Polri','ASN (Pemerintahan)','Belum/Tidak Bekerja','Pelajar','Mahasiswa','Ibu Rumah Tangga','Pegawai Swasta','Wirausaha','Pengusaha','Lainnya'];
+
+const STEPS = ['Warga I','Warga II','Dok & TTD','Ringkasan'];
 
 /* ==================================================================
    STATE
    ================================================================== */
 function makeWarga(label){
-  return { label, nama:'', gender:'', umur:'', pekerjaan:'', telp:'', alamat:'',
-    aspek:[], informasi:'', tindakLanjut:'', namaKetuaRT:'',
+  return { label, nama:'', gender:'', umur:'', pekerjaan:'', pekerjaanLainnya:'', telp:'', alamat:'',
+    aspek:['PELAYANAN KESEHATAN'], informasi:'', tindakLanjut:'', namaKetuaRT:'',
     fotos:[], ttdWarga:null, ttdKetuaRT:null };
 }
 const state = {
@@ -488,12 +494,10 @@ function renderStepper(){
 function renderStep(){
   renderStepper();
   const body = document.getElementById('stepBody');
-  if(state.step === 0) body.innerHTML = stepInfo();
-  else if(state.step === 1) body.innerHTML = stepWarga(state.warga[0]);
-  else if(state.step === 2) body.innerHTML = stepWargaDua();
-  else if(state.step === 3) body.innerHTML = stepDokumentasi();
-  else if(state.step === 4) body.innerHTML = stepTTD();
-  else if(state.step === 5) body.innerHTML = stepRingkasan();
+  if(state.step === 0) body.innerHTML = stepInfo() + stepWarga(state.warga[0]);
+  else if(state.step === 1) body.innerHTML = stepWargaDua();
+  else if(state.step === 2) body.innerHTML = stepDokumentasi() + stepTTD();
+  else if(state.step === 3) body.innerHTML = stepRingkasan();
 
   bindStepEvents();
   renderNav();
@@ -545,11 +549,16 @@ function stepWarga(w, isKedua){
       <div class="field"><label>Umur</label>
         <input type="number" min="0" data-w="${idx}" data-f="umur" value="${esc(w.umur)}" placeholder="Tahun"></div>
       <div class="field"><label>No. Telp</label>
-        <input type="tel" data-w="${idx}" data-f="telp" value="${esc(w.telp)}" placeholder="08xxxxxxxxxx"></div>
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" data-numeric="1" data-w="${idx}" data-f="telp" value="${esc(w.telp)}" placeholder="08xxxxxxxxxx"></div>
     </div>
 
     <div class="field"><label>Pekerjaan</label>
-      <input type="text" data-w="${idx}" data-f="pekerjaan" value="${esc(w.pekerjaan)}"></div>
+      <select data-w="${idx}" data-f="pekerjaan">
+        <option value="" ${!w.pekerjaan?'selected':''}>— Pilih Pekerjaan —</option>
+        ${PEKERJAAN_OPTIONS.map(p=>`<option value="${p}" ${w.pekerjaan===p?'selected':''}>${p}</option>`).join('')}
+      </select>
+      ${w.pekerjaan==='Lainnya' ? `<input type="text" data-w="${idx}" data-f="pekerjaanLainnya" value="${esc(w.pekerjaanLainnya)}" placeholder="Sebutkan pekerjaan" style="margin-top:8px;">` : ''}
+    </div>
 
     <div class="field"><label>Alamat</label>
       <textarea data-w="${idx}" data-f="alamat" placeholder="Alamat lengkap">${esc(w.alamat)}</textarea></div>
@@ -695,8 +704,12 @@ function bindStepEvents(){
   document.querySelectorAll('[data-w][data-f]').forEach(el=>{
     el.addEventListener('input', e=>{
       const idx = +el.dataset.w, f = el.dataset.f;
-      state.warga[idx][f] = el.value;
+      state.warga[idx][f] = el.dataset.numeric ? el.value.replace(/\D/g,'') : el.value;
+      if(el.dataset.numeric && el.value !== state.warga[idx][f]) el.value = state.warga[idx][f];
     });
+  });
+  document.querySelectorAll('select[data-f="pekerjaan"]').forEach(el=>{
+    el.addEventListener('change', ()=>{ renderStep(); });
   });
   document.querySelectorAll('.gender-chip').forEach(el=>{
     el.addEventListener('click', ()=>{
@@ -805,7 +818,6 @@ function renderNav(){
     if(!validateStep()) return;
     persistCurrentSigs();
     state.step++;
-    if(state.step===2 && !state.adaWargaKedua){} // tetap tampil toggle
     renderStep();
     scrollTop();
   });
@@ -832,25 +844,21 @@ function validateStep(){
     if(!state.tanggal || !document.getElementById('f_petugas').value.trim()){
       return showAlertErr('Tanggal kunjungan dan nama petugas wajib diisi.');
     }
-  }
-  if(state.step===1){
     const w = state.warga[0];
     if(!w.nama.trim() || !w.gender || !w.umur || !w.alamat.trim() || !w.namaKetuaRT.trim()){
       return showAlertErr('Nama, jenis kelamin, umur, alamat, dan nama Ketua RT/RW wajib diisi untuk Warga I.');
     }
   }
-  if(state.step===2 && state.adaWargaKedua){
+  if(state.step===1 && state.adaWargaKedua){
     const w = state.warga[1];
     if(!w.nama.trim() || !w.gender || !w.umur || !w.alamat.trim() || !w.namaKetuaRT.trim()){
       return showAlertErr('Nama, jenis kelamin, umur, alamat, dan nama Ketua RT/RW wajib diisi untuk Warga II.');
     }
   }
-  if(state.step===3){
+  if(state.step===2){
     for(const {w} of activeWarga()){
       if(w.fotos.length===0) return showAlertErr('Unggah minimal 1 foto dokumentasi untuk Warga '+w.label+'.');
     }
-  }
-  if(state.step===4){
     persistCurrentSigs();
     if(!state.ttdPetugas) return showAlertErr('Tanda tangan Petugas wajib diisi.');
     for(const {w, idx} of activeWarga()){
@@ -882,7 +890,7 @@ async function doSubmit(){
     ttdPetugas: state.ttdPetugas,
     warga: activeWarga().map(({w})=>({
       label: w.label, nama: w.nama, gender: w.gender==='Lk'?'Laki-laki':'Perempuan',
-      umur: w.umur, pekerjaan: w.pekerjaan, telp: w.telp, alamat: w.alamat,
+      umur: w.umur, pekerjaan: (w.pekerjaan==='Lainnya' ? (w.pekerjaanLainnya.trim()||'Lainnya') : w.pekerjaan), telp: w.telp, alamat: w.alamat,
       aspek: w.aspek, informasi: w.informasi, tindakLanjut: w.tindakLanjut,
       namaKetuaRT: w.namaKetuaRT, fotos: w.fotos, ttdWarga: w.ttdWarga, ttdKetuaRT: w.ttdKetuaRT
     }))
@@ -957,11 +965,14 @@ function buildPrintArea(idKunjungan, payload){
     <div class="blangko-page">
       <div class="blangko-title">BLANGKO KUNJUNGAN POLMAS "PRESISI WARGA NTB"</div>
       <div class="blangko-warga-label">WARGA ${w.label}</div>
-      <div class="blangko-id-rows"><b>Nama :</b> ${esc(w.nama)} &nbsp;&nbsp;&nbsp;
-        ${['Lk','Pr'].map(g=>g===genderCode? `<span class="circled-print">${g}${inkCircleSVG()}</span>` : g).join(' / ')}
-        &nbsp;&nbsp;&nbsp; <b>Umur:</b> ${esc(w.umur)} Tahun</div>
-      <div class="blangko-id-rows"><b>Pekerjaan:</b> ${esc(w.pekerjaan)||'-'} &nbsp;&nbsp;&nbsp; <b>No. Telp:</b> ${esc(w.telp)||'-'}</div>
-      <div class="blangko-id-rows"><b>Alamat :</b> ${esc(w.alamat)}</div>
+      <div class="blangko-id-rows">
+        <span class="id-left"><b>Nama :</b> ${esc(w.nama)} &nbsp;&nbsp;&nbsp;
+        ${['Lk','Pr'].map(g=>g===genderCode? `<span class="circled-print">${g}${inkCircleSVG()}</span>` : g).join(' / ')}</span>
+        <span class="id-right"><b>Umur:</b> ${esc(w.umur)} Tahun</span></div>
+      <div class="blangko-id-rows">
+        <span class="id-left"><b>Pekerjaan:</b> ${esc(w.pekerjaan)||'-'}</span>
+        <span class="id-right"><b>No. Telp:</b> ${esc(w.telp)||'-'}</span></div>
+      <div class="blangko-id-rows"><span class="id-left"><b>Alamat :</b> ${esc(w.alamat)}</span></div>
       <div class="blangko-note">Telah menerima informasi / saran / permasalahan / keluhan dari masyarakat tersebut di atas, sebagai berikut:</div>
 
       <div class="blangko-table">
@@ -985,13 +996,13 @@ function buildPrintArea(idKunjungan, payload){
       <div class="sig-cols">
         <div><div class="role">Mengetahui<br>PETUGAS</div>
           <div class="sig-img">${payload.ttdPetugas?`<img src="${payload.ttdPetugas}">`:''}</div>
-          <div class="sig-name">${esc(state.namaPetugas)}</div></div>
+          <div class="sig-name">(${esc(state.namaPetugas)})</div></div>
         <div><div class="role">WARGA</div>
           <div class="sig-img">${w.ttdWarga?`<img src="${w.ttdWarga}">`:''}</div>
-          <div class="sig-name">${esc(w.nama)}</div></div>
+          <div class="sig-name">(${esc(w.nama)})</div></div>
         <div><div class="role">Ketua RT/RW/Ka-Dus/Ka-Ling</div>
           <div class="sig-img">${w.ttdKetuaRT?`<img src="${w.ttdKetuaRT}">`:''}</div>
-          <div class="sig-name">${esc(w.namaKetuaRT)}</div></div>
+          <div class="sig-name">(${esc(w.namaKetuaRT)})</div></div>
       </div>
     </div>`;
   });
@@ -1000,7 +1011,7 @@ function buildPrintArea(idKunjungan, payload){
     <div class="doc-title">DOKUMENTASI KEGIATAN</div>
     ${payload.warga.map(w=>`
       <div class="doc-warga-label">WARGA ${w.label}</div>
-      <div class="doc-photos">${w.fotos.map(f=>`<img src="${f}">`).join('')}</div>
+      <div class="doc-photos">${w.fotos.map(f=>`<div class="photo-box"><img src="${f}"></div>`).join('')}</div>
     `).join('')}
   </div>`;
 
