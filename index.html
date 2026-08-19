@@ -273,39 +273,39 @@
     background:#fff; padding:26px 22px; max-width:640px; margin:0 auto 14px;
     border:1px solid var(--garis); border-radius:8px;
   }
-  .blangko-title{text-align:center; font-family:var(--font-d); font-weight:700; font-size:14px; text-decoration:underline; margin-bottom:6px;}
-  .blangko-warga-label{font-family:var(--font-d); font-weight:700; font-size:13px; border-bottom:2px solid var(--ink); padding-bottom:3px; margin-bottom:4px;}
-  .blangko-id-rows{font-size:12px; margin-bottom:2px; display:flex; justify-content:space-between; gap:10px;}
+  .blangko-title{text-align:center; font-family:var(--font-d); font-weight:700; font-size:14px; text-decoration:underline; margin-bottom:3px;}
+  .blangko-warga-label{font-family:var(--font-d); font-weight:700; font-size:13px; border-bottom:2px solid var(--ink); padding-bottom:2px; margin-bottom:2px;}
+  .blangko-id-rows{font-size:12px; margin-bottom:1px; display:flex; justify-content:space-between; gap:10px;}
   .blangko-id-rows b{font-weight:700;}
   .blangko-id-rows .id-left{flex:1;}
   .blangko-id-rows .id-right{flex:none; white-space:nowrap;}
   .circled-print{position:relative; display:inline-block; padding:1px 10px;}
   .circled-print svg{position:absolute; inset:-8px -4px; width:calc(100% + 8px); height:calc(100% + 16px);}
   .circled-print path{fill:none; stroke:#111; stroke-width:2.6; stroke-linecap:round;}
-  .blangko-note{font-size:12px; margin:8px 0 6px;}
-  .blangko-table{border:1px solid var(--ink); margin-bottom:8px;}
+  .blangko-note{font-size:12px; margin:3px 0 3px;}
+  .blangko-table{border:1px solid var(--ink); margin-bottom:4px;}
   .blangko-table .head{display:flex; background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center; border-bottom:1px solid var(--ink);}
-  .blangko-table .head > div{padding:5px; border-right:1px solid var(--ink);}
+  .blangko-table .head > div{padding:3px; border-right:1px solid var(--ink);}
   .blangko-table .head > div:last-child{border-right:none;}
   .blangko-table .head .h-aspek{flex:0 0 36%;}
   .blangko-table .head .h-info{flex:1;}
   .blangko-table .body{display:flex;}
-  .blangko-table .aspek-col{flex:0 0 36%; border-right:1px solid var(--ink); padding:6px;}
-  .blangko-table .info-col{flex:1; padding:6px; font-size:11.5px; white-space:pre-wrap;}
+  .blangko-table .aspek-col{flex:0 0 36%; border-right:1px solid var(--ink); padding:4px;}
+  .blangko-table .info-col{flex:1; padding:4px; font-size:11.5px; white-space:pre-wrap;}
   .blangko-aspek-cols{display:flex; gap:4px;}
   .blangko-aspek-cols > div{flex:1;}
-  .print-aspek-item{display:flex; align-items:center; gap:5px; font-size:10.5px; margin-bottom:3px;}
+  .print-aspek-item{display:flex; align-items:center; gap:5px; font-size:10.5px; margin-bottom:2px;}
   .print-box{width:10px;height:10px; border:1.3px solid var(--ink); flex:none; position:relative;}
   .print-box.on::after{content:"✓"; position:absolute; inset:-3px 0 0 -1px; font-size:10px; font-weight:900;}
-  .blangko-tl{border:1px solid var(--ink); margin-bottom:6px;}
-  .blangko-tl .head{background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center; padding:5px; border-bottom:1px solid var(--ink);}
-  .blangko-tl .body{padding:7px; font-size:11.5px; min-height:95px; white-space:pre-wrap;}
-  .sig-cols{display:flex; margin-top:2px;}
+  .blangko-tl{border:1px solid var(--ink); margin-bottom:3px;}
+  .blangko-tl .head{background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center; padding:3px; border-bottom:1px solid var(--ink);}
+  .blangko-tl .body{padding:5px; font-size:11.5px; min-height:145px; white-space:pre-wrap;}
+  .sig-cols{display:flex; margin-top:1px;}
   .sig-cols > div{flex:1; padding:0 4px; text-align:center;}
-  .sig-cols .role{font-size:10.5px; font-weight:700; min-height:26px; display:flex; align-items:flex-end; justify-content:center;}
-  .sig-img{height:42px; display:flex; align-items:flex-end; justify-content:center; margin:4px 0 2px;}
-  .sig-img img{max-height:40px; max-width:100%;}
-  .sig-name{font-size:10.5px; padding-top:2px; margin-top:2px;}
+  .sig-cols .role{font-size:10.5px; font-weight:700; min-height:22px; display:flex; align-items:flex-end; justify-content:center;}
+  .sig-img{height:34px; display:flex; align-items:flex-end; justify-content:center; margin:2px 0 1px;}
+  .sig-img img{max-height:32px; max-width:100%;}
+  .sig-name{font-size:10.5px; padding-top:1px; margin-top:1px;}
   .doc-title{text-align:center; font-family:var(--font-d); font-weight:700; font-size:15px; margin-bottom:16px;}
   .doc-warga-label{font-family:var(--font-d); font-weight:700; font-size:13.5px; margin:14px 0 8px;}
   .doc-photos{display:flex; flex-direction:column; gap:12px;}
@@ -329,7 +329,8 @@
     body *{visibility:hidden;}
     #printArea, #printArea *{visibility:visible;}
     #printArea{display:block !important; position:absolute; left:0; top:0; width:100%; margin:0; padding:0;}
-    .blangko-page{border:none; box-shadow:none; page-break-inside:avoid; max-width:none; width:100%; margin:0; padding:6mm 12mm 0mm;}
+    .blangko-page{border:none; box-shadow:none; page-break-inside:avoid; max-width:none; width:100%; margin:0; padding:4mm 12mm 0mm;}
+    .blangko-page.doc-page{padding:6mm 12mm 0mm;}
     .blangko-page.doc-page{page-break-before:always;}
     .print-actions{display:none !important;}
   }
@@ -737,7 +738,7 @@ function stepTTD(){
   let html = `
   <div class="card">
     <h2>Tanda Tangan Digital</h2>
-    <p class="desc">Gambar tanda tangan langsung di layar menggunakan jari/stylus.</p>
+    <p class="desc">Gambar tanda tangan langsung di layar menggunakan jari/stylus. Boleh dikosongkan jika belum sempat tanda tangan.</p>
     <div class="sig-block">
       <div class="sig-label"><span>Mengetahui — Petugas</span><button data-clearsig="petugas">Bersihkan</button></div>
       <div class="sig-pad-wrap"><canvas class="sig-pad" id="sig_petugas"></canvas><div class="sig-baseline"></div></div>
@@ -974,11 +975,6 @@ function validateStep(){
       if(w.fotos.length===0) return showAlertErr('Unggah minimal 1 foto dokumentasi untuk Warga '+w.label+'.');
     }
     persistCurrentSigs();
-    if(!state.ttdPetugas) return showAlertErr('Tanda tangan Petugas wajib diisi.');
-    for(const {w, idx} of activeWarga()){
-      if(!w.ttdWarga) return showAlertErr('Tanda tangan Warga '+w.label+' wajib diisi.');
-      if(!w.ttdKetuaRT) return showAlertErr('Tanda tangan Ketua RT/RW/Ka-Dus/Ka-Ling untuk Warga '+w.label+' wajib diisi.');
-    }
   }
   return true;
 }
