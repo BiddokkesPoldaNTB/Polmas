@@ -180,6 +180,8 @@
   .upload-box.drag-over{border-color:var(--emas); background:var(--hijau-soft);}
   .upload-box .icon{font-size:26px; margin-bottom:6px;}
   .upload-box .txt{font-size:13px; color:var(--ink-soft); font-weight:600;}
+  .qdoc-label-row{display:flex; justify-content:space-between; align-items:center;}
+  .qdoc-rm-slot{font-size:11px; font-weight:600; color:var(--merah); background:none; border:none; cursor:pointer; padding:2px 4px;}
   .thumbs{display:flex; flex-direction:column; gap:10px; margin-top:12px;}
   .thumb{position:relative; width:100%; aspect-ratio:2/1; border-radius:8px; overflow:hidden; border:1.5px solid var(--garis); background:#f2ede0;}
   .thumb img{width:100%; height:100%; object-fit:cover; display:block;}
@@ -311,8 +313,8 @@
   .doc-warga-label{font-family:var(--font-d); font-weight:700; font-size:13.5px; margin:8px 0 8px;}
   .doc-photos + .doc-warga-label{margin-top:46px;}
   .doc-photos{display:flex; flex-direction:column; gap:12px;}
-  .doc-photos .photo-box{width:92%; max-width:170mm; margin:0; aspect-ratio:2/1; overflow:hidden; border:2px solid var(--ink); border-radius:4px; background:#f2ede0;}
-  .doc-photos .photo-box img{width:100%; height:100%; object-fit:cover; display:block;}
+  .doc-photos .photo-box{width:92%; margin:0; position:relative; height:0; padding-top:46%; overflow:hidden; border:2px solid var(--ink); border-radius:4px; background:#f2ede0;}
+  .doc-photos .photo-box img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;}
   .print-actions{display:flex; gap:10px; margin:14px 0 28px;}
 
   /* ---------- MODAL ATUR POSISI FOTO ---------- */
@@ -326,7 +328,7 @@
   .pa-actions{display:flex; gap:10px; margin-top:14px;}
 
   @media print{
-    @page{ margin: 0; }
+    @page{ margin: 0; size: A4; }
     body{ margin:0; }
     .topbar, #alertBox, #wizardView, #successView, #quickDocView, #historyView{ display:none !important; }
     #printArea{display:block !important; width:100%; margin:0; padding:0;}
@@ -438,31 +440,45 @@ const state = {
 let sigPads = {}; // menyimpan instance SignaturePad aktif per elemen id
 
 /* ==================================================================
-   DOKUMENTASI CEPAT (tanpa TTD) — pintasan khusus upload foto Warga I & II
+   DOKUMENTASI CEPAT (tanpa TTD) — pintasan khusus upload foto warga
    lalu langsung cetak halaman DOKUMENTASI KEGIATAN, tanpa formulir lengkap.
+   Jumlah warga dinamis (bisa ditambah), cetak otomatis mengikuti berapa
+   foto yang diunggah — dibagi 2 warga per lembar seperti blangko asli.
    ================================================================== */
-const quickDoc = { fotos: [[], []] };
+const quickDoc = { fotos: [[], []] }; // mulai 2 slot, bisa ditambah/dihapus
+
+function toRoman(num){
+  const map = [[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
+  let res = '';
+  for(const [val,sym] of map){ while(num>=val){ res+=sym; num-=val; } }
+  return res;
+}
 
 function renderQuickDoc(){
   const el = document.getElementById('quickDocBody');
-  const adaFoto = quickDoc.fotos[0].length>0 || quickDoc.fotos[1].length>0;
+  const adaFoto = quickDoc.fotos.some(arr=>arr.length>0);
   el.innerHTML = `
   <div class="card">
     <h2>Cetak Dokumentasi Kegiatan</h2>
-    <p class="desc">Unggah foto Warga I & II lalu langsung cetak halaman dokumentasinya saja — tanpa formulir lengkap dan tanpa tanda tangan. Foto bisa diketuk untuk pilih, atau diseret (drag & drop) langsung dari File Explorer.</p>
-    ${['I','II'].map((label,i)=>`
+    <p class="desc">Unggah foto tiap warga lalu langsung cetak halaman dokumentasinya saja — tanpa formulir lengkap dan tanpa tanda tangan. Jumlah warga bisa ditambah sesuai kebutuhan; saat dicetak otomatis dibagi 2 warga per lembar. Foto bisa diketuk atau diseret (drag & drop) dari File Explorer.</p>
+    ${quickDoc.fotos.map((fotos,i)=>`
       <div class="field">
-        <label>Foto — Warga ${label}</label>
+        <label class="qdoc-label-row">Foto — Warga ${toRoman(i+1)}
+          ${quickDoc.fotos.length>1?`<button type="button" class="qdoc-rm-slot" data-slot="${i}">Hapus warga ini</button>`:''}
+        </label>
         <div class="upload-box" data-qdoc-upload="${i}">
           <div class="icon">📷</div>
           <div class="txt">Ketuk atau seret foto ke sini</div>
           <input type="file" accept="image/*" multiple style="display:none;">
         </div>
         <div class="thumbs">
-          ${quickDoc.fotos[i].map((f,fi)=>`<div class="thumb"><img src="${f}"><button class="rm" data-qdoc-rm="${i}" data-fi="${fi}">×</button></div>`).join('')}
+          ${fotos.map((f,fi)=>`<div class="thumb"><img src="${f}"><button class="rm" data-qdoc-rm="${i}" data-fi="${fi}">×</button></div>`).join('')}
         </div>
       </div>
     `).join('')}
+    <div class="btn-row" style="margin-bottom:10px;">
+      <button class="btn btn-ghost btn-full" id="btnTambahWargaDoc">+ Tambah Warga</button>
+    </div>
     <div class="btn-row">
       <button class="btn btn-gold btn-full" id="btnCetakQuickDoc" ${adaFoto?'':'disabled'}>🖨️ Cetak Dokumentasi</button>
     </div>
@@ -479,6 +495,17 @@ function renderQuickDoc(){
       renderQuickDoc();
     });
   });
+  document.querySelectorAll('.qdoc-rm-slot').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      quickDoc.fotos.splice(+btn.dataset.slot, 1);
+      renderQuickDoc();
+    });
+  });
+  const btnTambah = document.getElementById('btnTambahWargaDoc');
+  if(btnTambah) btnTambah.addEventListener('click', ()=>{
+    quickDoc.fotos.push([]);
+    renderQuickDoc();
+  });
   const btnCetak = document.getElementById('btnCetakQuickDoc');
   if(btnCetak) btnCetak.addEventListener('click', ()=>{
     buildQuickDocPrintArea();
@@ -488,15 +515,24 @@ function renderQuickDoc(){
 
 function buildQuickDocPrintArea(){
   const area = document.getElementById('printArea');
-  const labels = ['I','II'];
+  const filled = quickDoc.fotos
+    .map((fotos,i)=>({ label: toRoman(i+1), fotos }))
+    .filter(w => w.fotos.length > 0);
+
+  // Bagi 2 warga per lembar, sama seperti pola blangko asli (WARGA I-II, III-IV, dst)
+  const chunks = [];
+  for(let i=0; i<filled.length; i+=2){ chunks.push(filled.slice(i, i+2)); }
+
   let html = `<div class="print-actions"><button class="btn btn-ghost" onclick="document.getElementById('printArea').style.display='none';">Tutup Pratinjau</button><button class="btn btn-primary" onclick="window.print()">🖨️ Cetak / Simpan PDF</button></div>`;
-  html += `<div class="blangko-page doc-page">
-    <div class="doc-title">DOKUMENTASI KEGIATAN</div>
-    ${labels.map((label,i)=> quickDoc.fotos[i].length ? `
-      <div class="doc-warga-label">WARGA ${label}</div>
-      <div class="doc-photos">${quickDoc.fotos[i].map(f=>`<div class="photo-box"><img src="${f}"></div>`).join('')}</div>
-    ` : '').join('')}
-  </div>`;
+  chunks.forEach(chunk=>{
+    html += `<div class="blangko-page doc-page">
+      <div class="doc-title">DOKUMENTASI KEGIATAN</div>
+      ${chunk.map(w=>`
+        <div class="doc-warga-label">WARGA ${w.label}</div>
+        <div class="doc-photos">${w.fotos.map(f=>`<div class="photo-box"><img src="${f}"></div>`).join('')}</div>
+      `).join('')}
+    </div>`;
+  });
   area.innerHTML = html;
   area.style.display = 'block';
 }
