@@ -1082,18 +1082,18 @@ function persistCurrentSigs(){
 function validateStep(){
   clearAlert();
   if(state.step===0){
-    if(!state.tanggal || !document.getElementById('f_petugas').value.trim()){
-      return showAlertErr('Tanggal kunjungan dan nama petugas wajib diisi.');
+    if(!state.tanggal){
+      return showAlertErr('Tanggal kunjungan wajib diisi.');
     }
     const w = state.warga[0];
-    if(!w.nama.trim() || !w.gender || !w.umur || !w.alamat.trim() || !w.namaKetuaRT.trim()){
-      return showAlertErr('Nama, jenis kelamin, umur, alamat, dan nama Ketua RT/RW wajib diisi untuk Warga I.');
+    if(!w.gender || !w.umur || !w.alamat.trim()){
+      return showAlertErr('Jenis kelamin, umur, dan alamat wajib diisi untuk Warga I.');
     }
   }
   if(state.step===1 && state.adaWargaKedua){
     const w = state.warga[1];
-    if(!w.nama.trim() || !w.gender || !w.umur || !w.alamat.trim() || !w.namaKetuaRT.trim()){
-      return showAlertErr('Nama, jenis kelamin, umur, alamat, dan nama Ketua RT/RW wajib diisi untuk Warga II.');
+    if(!w.gender || !w.umur || !w.alamat.trim()){
+      return showAlertErr('Jenis kelamin, umur, dan alamat wajib diisi untuk Warga II.');
     }
   }
   if(state.step===2){
