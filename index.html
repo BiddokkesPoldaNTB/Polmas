@@ -289,15 +289,15 @@
   .circled-print svg{position:absolute; inset:-8px -4px; width:calc(100% + 8px); height:calc(100% + 16px);}
   .circled-print path{fill:none; stroke:#111; stroke-width:2.6; stroke-linecap:round;}
   .blangko-note{font-size:12px; margin:3px 0 3px;}
-  .blangko-table{border:1px solid var(--ink); margin-bottom:4px;}
+  .blangko-table{border:1px solid var(--ink); margin-bottom:4px; box-sizing:border-box;}
   .blangko-table .head{display:flex; background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center; border-bottom:1px solid var(--ink);}
-  .blangko-table .head > div{padding:3px; border-right:1px solid var(--ink);}
+  .blangko-table .head > div{padding:4px; border-right:1px solid var(--ink); box-sizing:border-box;}
   .blangko-table .head > div:last-child{border-right:none;}
   .blangko-table .head .h-aspek{flex:0 0 36%;}
   .blangko-table .head .h-info{flex:1;}
   .blangko-table .body{display:flex;}
-  .blangko-table .aspek-col{flex:0 0 36%; border-right:1px solid var(--ink); padding:4px;}
-  .blangko-table .info-col{flex:1; padding:4px; font-size:11.5px; white-space:pre-wrap;}
+  .blangko-table .aspek-col{flex:0 0 36%; border-right:1px solid var(--ink); padding:4px; box-sizing:border-box;}
+  .blangko-table .info-col{flex:1; padding:4px; font-size:11.5px; white-space:pre-wrap; box-sizing:border-box;}
   .blangko-aspek-cols{display:flex; gap:4px;}
   .blangko-aspek-cols > div{flex:1;}
   .print-aspek-item{display:flex; align-items:center; gap:5px; font-size:10.5px; margin-bottom:2px;}
@@ -305,7 +305,7 @@
   .print-box.on::after{content:"✓"; position:absolute; inset:-3px 0 0 -1px; font-size:10px; font-weight:900;}
   .blangko-tl{border:1px solid var(--ink); margin-bottom:3px;}
   .blangko-tl .head{background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center; padding:3px; border-bottom:1px solid var(--ink);}
-  .blangko-tl .body{padding:5px; font-size:11.5px; min-height:145px; white-space:pre-wrap;}
+  .blangko-tl .body{padding:5px; font-size:11.5px; min-height:115px; white-space:pre-wrap;}
   .sig-cols{display:flex; margin-top:1px;}
   .sig-cols > div{flex:1; padding:0 4px; text-align:center;}
   .sig-cols .role{font-size:10.5px; font-weight:700; min-height:22px; display:flex; align-items:flex-end; justify-content:center;}
@@ -335,7 +335,7 @@
     body{ margin:0; }
     .topbar, #alertBox, #wizardView, #successView, #quickDocView, #historyView{ display:none !important; }
     #printArea{display:block !important; width:100%; margin:0; padding:0;}
-    .blangko-page{border:none; box-shadow:none; page-break-inside:avoid; max-width:none; width:100%; margin:0; padding:4mm 12mm 0mm;}
+    .blangko-page{border:none; box-shadow:none; page-break-inside:avoid; max-width:none; width:100%; margin:0; padding:4mm 8mm 0mm;}
     .blangko-page.doc-page{padding:6mm 12mm 0mm; page-break-before:always;}
     .print-actions{display:none !important;}
   }
