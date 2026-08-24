@@ -308,6 +308,7 @@
   .sig-img{height:48px; display:flex; align-items:flex-end; justify-content:center; margin:2px 0 1px;}
   .sig-img img{max-height:44px; max-width:100%;}
   .sig-name{font-size:10.5px; padding-top:1px; margin-top:1px;}
+  .sig-blank{display:inline-block; width:120px; border-bottom:1px dotted var(--ink); height:1px; vertical-align:middle;}
   .doc-title{text-align:center; font-family:var(--font-d); font-weight:700; font-size:15px; margin-bottom:16px;}
   .doc-warga-label{font-family:var(--font-d); font-weight:700; font-size:13.5px; margin:8px 0 8px;}
   .doc-photos + .doc-warga-label{margin-top:46px;}
@@ -331,7 +332,7 @@
     body{ margin:0; }
     .topbar, #alertBox, #wizardView, #successView, #quickDocView, #historyView{ display:none !important; }
     #printArea{display:block !important; width:100%; margin:0; padding:0;}
-    .blangko-page{border:none; box-shadow:none; page-break-inside:avoid; max-width:none; width:100%; margin:0; padding:4mm 4mm 0mm;}
+    .blangko-page{border:none; box-shadow:none; page-break-inside:avoid; max-width:none; width:100%; margin:0; padding:4mm 2mm 0mm;}
     .blangko-page.doc-page{padding:6mm 12mm 0mm; page-break-before:always;}
     .print-actions{display:none !important;}
   }
@@ -1191,6 +1192,11 @@ function aspekPrintCol(list, selected){
     return `<div class="print-aspek-item"><span class="print-box ${on?'on':''}"></span><span>${a}</span></div>`;
   }).join('');
 }
+/** Tampilkan "(Nama)"; kalau nama kosong tetap tampil kurung dengan kolom kosong sepanjang nama contoh. */
+function sigNameDisplay(name){
+  const trimmed = (name||'').trim();
+  return trimmed ? `(${esc(trimmed)})` : `(<span class="sig-blank"></span>)`;
+}
 function buildPrintArea(idKunjungan, payload){
   const area = document.getElementById('printArea');
   let html = '';
@@ -1229,13 +1235,13 @@ function buildPrintArea(idKunjungan, payload){
       <div class="sig-cols">
         <div><div class="role">Mengetahui<br>PETUGAS</div>
           <div class="sig-img">${payload.ttdPetugas?`<img src="${payload.ttdPetugas}">`:''}</div>
-          <div class="sig-name">(${esc(state.namaPetugas)})</div></div>
+          <div class="sig-name">${sigNameDisplay(state.namaPetugas)}</div></div>
         <div><div class="role">WARGA</div>
           <div class="sig-img">${w.ttdWarga?`<img src="${w.ttdWarga}">`:''}</div>
-          <div class="sig-name">(${esc(w.nama)})</div></div>
+          <div class="sig-name">${sigNameDisplay(w.nama)}</div></div>
         <div><div class="role">Ketua RT/RW/Ka-Dus/Ka-Ling</div>
           <div class="sig-img">${w.ttdKetuaRT?`<img src="${w.ttdKetuaRT}">`:''}</div>
-          <div class="sig-name">(${esc(w.namaKetuaRT)})</div></div>
+          <div class="sig-name">${sigNameDisplay(w.namaKetuaRT)}</div></div>
       </div>
     </div>`;
   });
