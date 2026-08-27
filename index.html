@@ -282,7 +282,8 @@
   }
   .blangko-title{text-align:center; font-family:var(--font-d); font-weight:700; font-size:14px; text-decoration:underline; margin-bottom:3px;}
   .blangko-warga-label{font-family:var(--font-d); font-weight:700; font-size:13px; border-bottom:2px solid var(--ink); padding-bottom:2px; margin-bottom:2px;}
-  .blangko-id-rows{font-size:13px; margin-bottom:1px; display:flex; justify-content:space-between; gap:10px; font-family:var(--font-hand);}
+  .blangko-id-rows{font-size:13px; margin-bottom:1px; display:flex; justify-content:space-between; gap:10px;}
+  .hand{font-family:var(--font-hand); font-weight:700;}
   .blangko-id-rows b{font-weight:700;}
   .blangko-id-rows .id-left{flex:1;}
   .blangko-id-rows .id-right{flex:none; white-space:nowrap;}
@@ -294,7 +295,7 @@
   .blangko-table .h-aspek, .blangko-table .h-info{background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center; padding:4px; border-bottom:1px solid var(--ink); box-sizing:border-box;}
   .blangko-table .h-aspek{border-right:1px solid var(--ink);}
   .blangko-table .aspek-col{border-right:1px solid var(--ink); padding:4px; box-sizing:border-box;}
-  .blangko-table .info-col{padding:4px; font-size:13px; white-space:pre-wrap; box-sizing:border-box; font-family:var(--font-hand);}
+  .blangko-table .info-col{padding:4px; font-size:13px; white-space:pre-wrap; box-sizing:border-box; font-family:var(--font-hand); font-weight:700;}
   .blangko-aspek-cols{display:flex; gap:4px;}
   .blangko-aspek-cols > div{flex:1;}
   .print-aspek-item{display:flex; align-items:center; gap:5px; font-size:10.5px; margin-bottom:2px;}
@@ -302,13 +303,13 @@
   .print-box.on::after{content:"✓"; position:absolute; inset:-3px 0 0 -1px; font-size:10px; font-weight:900;}
   .blangko-tl{border:1px solid var(--ink); margin-bottom:3px;}
   .blangko-tl .head{background:#DCDCDC; font-weight:700; font-size:11.5px; text-align:center; padding:3px; border-bottom:1px solid var(--ink);}
-  .blangko-tl .body{padding:5px; font-size:13px; min-height:115px; white-space:pre-wrap; font-family:var(--font-hand);}
+  .blangko-tl .body{padding:5px; font-size:13px; min-height:115px; white-space:pre-wrap; font-family:var(--font-hand); font-weight:700;}
   .sig-cols{display:flex; margin-top:1px;}
   .sig-cols > div{flex:1; padding:0 4px; text-align:center;}
   .sig-cols .role{font-size:10.5px; font-weight:700; min-height:22px; display:flex; align-items:flex-end; justify-content:center;}
   .sig-img{height:48px; display:flex; align-items:flex-end; justify-content:center; margin:2px 0 1px;}
   .sig-img img{max-height:44px; max-width:100%;}
-  .sig-name{font-size:12px; padding-top:1px; margin-top:1px; font-family:var(--font-hand);}
+  .sig-name{font-size:12px; padding-top:1px; margin-top:1px; font-family:var(--font-hand); font-weight:700;}
   .sig-blank{display:inline-block; width:120px; border-bottom:1px dotted var(--ink); height:1px; vertical-align:middle;}
   .doc-title{text-align:center; font-family:var(--font-d); font-weight:700; font-size:15px; margin-bottom:16px;}
   .doc-warga-label{font-family:var(--font-d); font-weight:700; font-size:13.5px; margin:8px 0 8px;}
@@ -1213,13 +1214,13 @@ function buildPrintArea(idKunjungan, payload){
       <div class="blangko-title">BLANGKO KUNJUNGAN POLMAS "PRESISI WARGA NTB"</div>
       <div class="blangko-warga-label">WARGA ${w.label}</div>
       <div class="blangko-id-rows">
-        <span class="id-left"><b>Nama :</b> ${namaDisplay(w.nama)} &nbsp;&nbsp;&nbsp;
+        <span class="id-left"><b>Nama :</b> <span class="hand">${namaDisplay(w.nama)}</span> &nbsp;&nbsp;&nbsp;
         ${['Lk','Pr'].map(g=>g===genderCode? `<span class="circled-print">${g}${inkCircleSVG()}</span>` : g).join(' / ')}</span>
-        <span class="id-right"><b>Umur:</b> ${esc(w.umur)} Tahun</span></div>
+        <span class="id-right"><b>Umur:</b> <span class="hand">${esc(w.umur)}</span> Tahun</span></div>
       <div class="blangko-id-rows">
-        <span class="id-left"><b>Pekerjaan:</b> ${esc(w.pekerjaan)||'-'}</span>
-        <span class="id-right"><b>No. Telp:</b> ${esc(w.telp)||'-'}</span></div>
-      <div class="blangko-id-rows"><span class="id-left"><b>Alamat :</b> ${esc(w.alamat)}</span></div>
+        <span class="id-left"><b>Pekerjaan:</b> <span class="hand">${esc(w.pekerjaan)||'-'}</span></span>
+        <span class="id-right"><b>No. Telp:</b> <span class="hand">${esc(w.telp)||'-'}</span></span></div>
+      <div class="blangko-id-rows"><span class="id-left"><b>Alamat :</b> <span class="hand">${esc(w.alamat)}</span></span></div>
       <div class="blangko-note">Telah menerima informasi / saran / permasalahan / keluhan dari masyarakat tersebut di atas, sebagai berikut:</div>
 
       <div class="blangko-table">
